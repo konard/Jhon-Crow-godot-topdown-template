@@ -27,6 +27,10 @@ godot-topdown-template/
 │   │   └── TestTier.tscn  # Test level for development
 │   ├── characters/        # Character scenes
 │   │   └── Player.tscn    # Player character with movement
+│   ├── projectiles/       # Projectile scenes
+│   │   └── Bullet.tscn    # Bullet projectile
+│   ├── objects/           # Game object scenes
+│   │   └── Target.tscn    # Shootable target
 │   └── ui/                # UI scenes
 ├── scripts/               # GDScript files (.gd)
 │   ├── main.gd            # Main scene script
@@ -34,7 +38,11 @@ godot-topdown-template/
 │   │   └── test_tier.gd   # Test tier script
 │   ├── autoload/          # Autoload/singleton scripts
 │   ├── characters/        # Character scripts
-│   │   └── player.gd      # Player movement script
+│   │   └── player.gd      # Player movement and shooting script
+│   ├── projectiles/       # Projectile scripts
+│   │   └── bullet.gd      # Bullet behavior script
+│   ├── objects/           # Game object scripts
+│   │   └── target.gd      # Target hit reaction script
 │   └── utils/             # Utility scripts
 ├── assets/                # Game assets
 │   ├── sprites/           # 2D sprites and textures
@@ -54,7 +62,8 @@ A test level/tier (shooting range) for developing and testing game mechanics. Th
 #### Features
 - **Enclosed play area** with walls that prevent the player from leaving
 - **Obstacles** placed within the arena for cover and movement testing
-- **Target zone** with red shooting targets for future shooting mechanics
+- **Target zone** with red shooting targets that react when hit
+- **Shooting mechanics** - click to shoot bullets at targets
 - **UI overlay** showing level name and control instructions
 
 #### Scene Structure
@@ -111,6 +120,48 @@ The player character scene with smooth physics-based movement. Features:
 
 The player uses acceleration-based movement for smooth control without jitter. Diagonal movement is normalized to prevent faster diagonal speeds.
 
+#### Shooting System
+The player can shoot bullets towards the mouse cursor by clicking the left mouse button. The shooting system includes:
+- **Bullet spawning** with offset from player center in the shooting direction
+- **Automatic bullet scene loading** via preload
+- **Direction calculation** towards mouse cursor position
+
+### Bullet.tscn
+A projectile scene for the shooting system. Features:
+- **Area2D** root node for collision detection
+- **CircleShape2D** for precise hit detection (4px radius)
+- **Sprite2D** with yellow placeholder texture
+- **Auto-destruction** after collision or lifetime timeout
+
+#### Bullet Properties (Inspector)
+| Property | Default | Description |
+|----------|---------|-------------|
+| `speed` | 600.0 | Bullet travel speed in pixels/second |
+| `lifetime` | 3.0 | Maximum lifetime before auto-destruction |
+
+#### Collision Setup
+- **Layer**: 5 (projectiles)
+- **Mask**: 3 (obstacles) + 6 (targets) - bullets detect walls and targets
+
+### Target.tscn
+A shootable target that reacts when hit by bullets. Features:
+- **Area2D** root node for hit detection
+- **Visual feedback** - changes color when hit (red to green)
+- **Respawn system** - resets to original state after delay
+- **Optional destruction** - can be configured to destroy on hit
+
+#### Target Properties (Inspector)
+| Property | Default | Description |
+|----------|---------|-------------|
+| `hit_color` | Green | Color when target is hit |
+| `normal_color` | Red | Default target color |
+| `destroy_on_hit` | false | Whether to destroy target when hit |
+| `respawn_delay` | 2.0 | Delay before reset/destroy in seconds |
+
+#### Collision Setup
+- **Layer**: 6 (targets)
+- **Mask**: 5 (projectiles) - targets detect bullets
+
 ## Input Actions
 
 The project includes pre-configured input actions for top-down movement:
@@ -121,6 +172,7 @@ The project includes pre-configured input actions for top-down movement:
 | `move_down` | S, Down Arrow |
 | `move_left` | A, Left Arrow |
 | `move_right` | D, Right Arrow |
+| `shoot` | Left Mouse Button |
 
 ## Physics Layers
 
@@ -133,6 +185,7 @@ Pre-configured collision layers for top-down games:
 | 3 | obstacles | Walls, barriers |
 | 4 | pickups | Items, collectibles |
 | 5 | projectiles | Bullets, spells |
+| 6 | targets | Shooting targets |
 
 ## Best Practices
 
