@@ -32,17 +32,23 @@ godot-topdown-template/
 │   ├── objects/           # Game object scenes
 │   │   └── Target.tscn    # Shootable target
 │   └── ui/                # UI scenes
+│       ├── PauseMenu.tscn # Pause menu with resume/controls/quit
+│       └── ControlsMenu.tscn # Key rebinding interface
 ├── scripts/               # GDScript files (.gd)
 │   ├── main.gd            # Main scene script
 │   ├── levels/            # Level scripts
 │   │   └── test_tier.gd   # Test tier script
 │   ├── autoload/          # Autoload/singleton scripts
+│   │   └── input_settings.gd # Input settings manager (singleton)
 │   ├── characters/        # Character scripts
 │   │   └── player.gd      # Player movement and shooting script
 │   ├── projectiles/       # Projectile scripts
 │   │   └── bullet.gd      # Bullet behavior script
 │   ├── objects/           # Game object scripts
 │   │   └── target.gd      # Target hit reaction script
+│   ├── ui/                # UI scripts
+│   │   ├── pause_menu.gd  # Pause menu controller
+│   │   └── controls_menu.gd # Key rebinding controller
 │   └── utils/             # Utility scripts
 ├── assets/                # Game assets
 │   ├── sprites/           # 2D sprites and textures
@@ -162,6 +168,41 @@ A shootable target that reacts when hit by bullets. Features:
 - **Layer**: 6 (targets)
 - **Mask**: 5 (projectiles) - targets detect bullets
 
+### PauseMenu.tscn
+A pause menu that appears when pressing Escape during gameplay. Features:
+- **Resume** - Return to gameplay
+- **Controls** - Open the key rebinding menu
+- **Quit** - Exit the game
+- Pauses the game tree when visible
+- Works during gameplay in any level
+
+### ControlsMenu.tscn
+A key rebinding interface accessible from the pause menu. Features:
+- **Action list** - Shows all remappable actions with current key bindings
+- **Rebinding** - Click any action button and press a new key to reassign
+- **Conflict detection** - Warns when a key is already assigned to another action
+- **Apply/Reset/Back** - Save changes, reset to defaults, or return to pause menu
+- **Persistent settings** - Key bindings are saved to `user://input_settings.cfg`
+
+#### Remappable Actions
+| Action | Default Key | Description |
+|--------|-------------|-------------|
+| Move Up | W | Move player upward |
+| Move Down | S | Move player downward |
+| Move Left | A | Move player left |
+| Move Right | D | Move player right |
+| Shoot | Left Mouse Button | Fire projectile towards cursor |
+| Pause | Escape | Toggle pause menu |
+
+#### Using the Controls Menu
+1. Press Escape to open the pause menu
+2. Click "Controls" to open the key rebinding menu
+3. Click any action button to start rebinding
+4. Press the desired new key (or Escape to cancel)
+5. Click "Apply" to save changes
+6. Click "Reset" to restore default bindings
+7. Click "Back" to return to the pause menu
+
 ## Input Actions
 
 The project includes pre-configured input actions for top-down movement:
@@ -173,6 +214,7 @@ The project includes pre-configured input actions for top-down movement:
 | `move_left` | A, Left Arrow |
 | `move_right` | D, Right Arrow |
 | `shoot` | Left Mouse Button |
+| `pause` | Escape |
 
 ## Physics Layers
 
