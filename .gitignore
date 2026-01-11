@@ -32,4 +32,4 @@ Thumbs.db
 .vscode/
 
 # Export files
-export_presets.cfg
+# export_presets.cfg - commented out to allow CI/CD builds
