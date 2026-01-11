@@ -1,7 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3kv7pm5r2aub"]
+[gd_scene load_steps=9 format=3 uid="uid://d3kv7pm5r2aub"]
 
 [ext_resource type="Script" path="res://scripts/levels/test_tier.gd" id="1_test_tier"]
 [ext_resource type="PackedScene" uid="uid://bk8nq2vj5r7p1" path="res://scenes/characters/Player.tscn" id="2_player"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_target"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_target"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_horizontal"]
+size = Vector2(800, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_vertical"]
+size = Vector2(32, 656)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_square"]
+size = Vector2(96, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_wide"]
+size = Vector2(128, 64)
 
 [node name="TestTier" type="Node2D"]
 script = ExtResource("1_test_tier")
@@ -11,12 +29,176 @@ script = ExtResource("1_test_tier")
 [node name="Background" type="ColorRect" parent="Environment"]
 offset_right = 1280.0
 offset_bottom = 720.0
-color = Color(0.2, 0.3, 0.2, 1)
+color = Color(0.15, 0.2, 0.15, 1)
+
+[node name="Floor" type="ColorRect" parent="Environment"]
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 864.0
+offset_bottom = 656.0
+color = Color(0.25, 0.32, 0.25, 1)
+
+[node name="Walls" type="Node2D" parent="Environment"]
+
+[node name="WallTop" type="StaticBody2D" parent="Environment/Walls"]
+position = Vector2(464, 48)
+collision_layer = 4
+collision_mask = 0
+
+[node name="ColorRect" type="ColorRect" parent="Environment/Walls/WallTop"]
+offset_left = -400.0
+offset_top = -16.0
+offset_right = 400.0
+offset_bottom = 16.0
+color = Color(0.35, 0.28, 0.22, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Walls/WallTop"]
+shape = SubResource("RectangleShape2D_wall_horizontal")
+
+[node name="WallBottom" type="StaticBody2D" parent="Environment/Walls"]
+position = Vector2(464, 672)
+collision_layer = 4
+collision_mask = 0
+
+[node name="ColorRect" type="ColorRect" parent="Environment/Walls/WallBottom"]
+offset_left = -400.0
+offset_top = -16.0
+offset_right = 400.0
+offset_bottom = 16.0
+color = Color(0.35, 0.28, 0.22, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Walls/WallBottom"]
+shape = SubResource("RectangleShape2D_wall_horizontal")
+
+[node name="WallLeft" type="StaticBody2D" parent="Environment/Walls"]
+position = Vector2(48, 360)
+collision_layer = 4
+collision_mask = 0
+
+[node name="ColorRect" type="ColorRect" parent="Environment/Walls/WallLeft"]
+offset_left = -16.0
+offset_top = -328.0
+offset_right = 16.0
+offset_bottom = 328.0
+color = Color(0.35, 0.28, 0.22, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Walls/WallLeft"]
+shape = SubResource("RectangleShape2D_wall_vertical")
+
+[node name="WallRight" type="StaticBody2D" parent="Environment/Walls"]
+position = Vector2(880, 360)
+collision_layer = 4
+collision_mask = 0
+
+[node name="ColorRect" type="ColorRect" parent="Environment/Walls/WallRight"]
+offset_left = -16.0
+offset_top = -328.0
+offset_right = 16.0
+offset_bottom = 328.0
+color = Color(0.35, 0.28, 0.22, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Walls/WallRight"]
+shape = SubResource("RectangleShape2D_wall_vertical")
+
+[node name="Obstacles" type="Node2D" parent="Environment"]
+
+[node name="Obstacle1" type="StaticBody2D" parent="Environment/Obstacles"]
+position = Vector2(300, 250)
+collision_layer = 4
+collision_mask = 0
+
+[node name="ColorRect" type="ColorRect" parent="Environment/Obstacles/Obstacle1"]
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
+color = Color(0.4, 0.32, 0.25, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Obstacles/Obstacle1"]
+shape = SubResource("RectangleShape2D_obstacle_square")
+
+[node name="Obstacle2" type="StaticBody2D" parent="Environment/Obstacles"]
+position = Vector2(300, 470)
+collision_layer = 4
+collision_mask = 0
+
+[node name="ColorRect" type="ColorRect" parent="Environment/Obstacles/Obstacle2"]
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
+color = Color(0.4, 0.32, 0.25, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Obstacles/Obstacle2"]
+shape = SubResource("RectangleShape2D_obstacle_square")
+
+[node name="Obstacle3" type="StaticBody2D" parent="Environment/Obstacles"]
+position = Vector2(550, 360)
+collision_layer = 4
+collision_mask = 0
+
+[node name="ColorRect" type="ColorRect" parent="Environment/Obstacles/Obstacle3"]
+offset_left = -64.0
+offset_top = -32.0
+offset_right = 64.0
+offset_bottom = 32.0
+color = Color(0.4, 0.32, 0.25, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Obstacles/Obstacle3"]
+shape = SubResource("RectangleShape2D_obstacle_wide")
+
+[node name="Targets" type="Node2D" parent="Environment"]
+
+[node name="Target1" type="StaticBody2D" parent="Environment/Targets"]
+position = Vector2(750, 160)
+collision_layer = 4
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment/Targets/Target1"]
+modulate = Color(0.9, 0.2, 0.2, 1)
+texture = SubResource("PlaceholderTexture2D_target")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Targets/Target1"]
+shape = SubResource("RectangleShape2D_target")
+
+[node name="Target2" type="StaticBody2D" parent="Environment/Targets"]
+position = Vector2(750, 360)
+collision_layer = 4
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment/Targets/Target2"]
+modulate = Color(0.9, 0.2, 0.2, 1)
+texture = SubResource("PlaceholderTexture2D_target")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Targets/Target2"]
+shape = SubResource("RectangleShape2D_target")
+
+[node name="Target3" type="StaticBody2D" parent="Environment/Targets"]
+position = Vector2(750, 560)
+collision_layer = 4
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment/Targets/Target3"]
+modulate = Color(0.9, 0.2, 0.2, 1)
+texture = SubResource("PlaceholderTexture2D_target")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Targets/Target3"]
+shape = SubResource("RectangleShape2D_target")
+
+[node name="TargetArea" type="Node2D" parent="Environment"]
+
+[node name="TargetZoneLabel" type="Label" parent="Environment/TargetArea"]
+offset_left = 700.0
+offset_top = 80.0
+offset_right = 850.0
+offset_bottom = 110.0
+text = "TARGET ZONE"
+horizontal_alignment = 1
 
 [node name="Entities" type="Node2D" parent="."]
 
 [node name="Player" parent="Entities" instance=ExtResource("2_player")]
-position = Vector2(640, 360)
+position = Vector2(150, 360)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -33,10 +215,19 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -150.0
+offset_left = -200.0
 offset_top = 10.0
 offset_right = -10.0
 offset_bottom = 40.0
 grow_horizontal = 0
-text = "Test Tier"
+text = "Test Tier (Shooting Range)"
 horizontal_alignment = 2
+
+[node name="InstructionsLabel" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 10.0
+offset_top = 650.0
+offset_right = 400.0
+offset_bottom = 710.0
+text = "WASD / Arrow Keys - Move | Red squares - Targets | Brown - Walls/Obstacles"
