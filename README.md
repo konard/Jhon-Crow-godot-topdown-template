@@ -5,6 +5,7 @@ A template project for creating top-down games in Godot 4.3+.
 ## Requirements
 
 - [Godot Engine 4.3](https://godotengine.org/download) or later
+- OpenGL 3.3 / OpenGL ES 3.0 compatible graphics (most systems from 2012+)
 
 ## Getting Started
 
