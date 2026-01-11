@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3kv7pm5r2aub"]
+
+[ext_resource type="Script" path="res://scripts/levels/test_tier.gd" id="1_test_tier"]
+
+[node name="TestTier" type="Node2D"]
+script = ExtResource("1_test_tier")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="Environment" type="Node2D" parent="."]
+
+[node name="Background" type="ColorRect" parent="Environment"]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.2, 0.3, 0.2, 1)
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Player" type="CharacterBody2D" parent="Entities"]
+position = Vector2(640, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Player"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Player"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LevelLabel" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -150.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 40.0
+grow_horizontal = 0
+text = "Test Tier"
+horizontal_alignment = 2
