@@ -25,6 +25,7 @@ godot-topdown-template/
 │   ├── levels/            # Game levels/tiers
 │   │   └── TestTier.tscn  # Test level for development
 │   ├── characters/        # Character scenes
+│   │   └── Player.tscn    # Player character with movement
 │   └── ui/                # UI scenes
 ├── scripts/               # GDScript files (.gd)
 │   ├── main.gd            # Main scene script
@@ -32,6 +33,7 @@ godot-topdown-template/
 │   │   └── test_tier.gd   # Test tier script
 │   ├── autoload/          # Autoload/singleton scripts
 │   ├── characters/        # Character scripts
+│   │   └── player.gd      # Player movement script
 │   └── utils/             # Utility scripts
 ├── assets/                # Game assets
 │   ├── sprites/           # 2D sprites and textures
@@ -47,10 +49,25 @@ The main entry scene that loads when pressing F5. This is the starting point of 
 
 ### TestTier.tscn
 A test level/tier for developing and testing game mechanics. Includes a basic structure with:
-- Camera2D for viewport control
 - Environment node for level elements
-- Entities node for game objects (player, enemies, etc.)
+- Entities node for game objects (includes the Player)
 - UI layer for HUD elements
+
+### Player.tscn
+The player character scene with smooth physics-based movement. Features:
+- **CharacterBody2D** root node for physics-based movement
+- **CollisionShape2D** with circular collision (16px radius)
+- **Sprite2D** with placeholder texture (can be replaced with custom sprites)
+- **Camera2D** that smoothly follows the player
+
+#### Player Properties (Inspector)
+| Property | Default | Description |
+|----------|---------|-------------|
+| `max_speed` | 200.0 | Maximum movement speed in pixels/second |
+| `acceleration` | 1200.0 | How quickly the player reaches max speed |
+| `friction` | 1000.0 | How quickly the player stops when not moving |
+
+The player uses acceleration-based movement for smooth control without jitter. Diagonal movement is normalized to prevent faster diagonal speeds.
 
 ## Input Actions
 
